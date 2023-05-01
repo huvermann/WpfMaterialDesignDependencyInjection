@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog.Events;
+using Serilog;
 using System.Windows;
 using WpfMd.Options;
 using WpfMd.ViewModel;
@@ -17,12 +19,20 @@ namespace WpfMd
 
         public App()
         {
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.File(@".\logs\logs.txt")
+            .CreateLogger();
+
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
                     _configuration = context.Configuration;
                     ConfigureServices(services, _configuration);
                     
                 })
+                .UseSerilog()
                 .Build();
         }
         protected override async void OnExit(ExitEventArgs e)
@@ -43,7 +53,7 @@ namespace WpfMd
             base.OnStartup(e);
         }
 
-        private void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();

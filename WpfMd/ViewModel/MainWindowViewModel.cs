@@ -1,4 +1,5 @@
 ﻿using ControlzEx.Standard;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,15 @@ namespace WpfMd.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
 		private DateTime _zeit = DateTime.Now;
-        private IOptions<TestOption> _option;
+        private readonly ILogger<MainWindowViewModel> _logger;
+        private readonly IOptions<TestOption> _option;
 
-        public MainWindowViewModel(IOptions<TestOption> option )
+        public MainWindowViewModel(ILogger<MainWindowViewModel> logger, IOptions<TestOption> option )
         {
-            _option = option;
+			_logger = logger;
+			_option = option;
 			_kundenName = option.Value.Nachname;
+			_logger.LogInformation("Starte Application");
         }
         public DateTime Zeitangabe
 		{
