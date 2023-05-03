@@ -1,4 +1,5 @@
-﻿using ControlzEx.Standard;
+﻿using AsyncAwaitBestPractices.MVVM;
+using ControlzEx.Standard;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfMd.Options;
 using WpfMd.Repositories;
+
 
 namespace WpfMd.ViewModel
 {
@@ -34,7 +36,17 @@ namespace WpfMd.ViewModel
 			_username = secretOptions.Value.Username;
             _certificateRepository = certificateRepository;
             _logger.LogInformation("Starte Application");
+
+			ExampleAsyncCommand = new AsyncCommand(ButtonPressAsync);
         }
+
+        private Task ButtonPressAsync()
+        {
+			_logger.LogInformation($"{nameof(ButtonPressAsync)}");
+			Username = "Geänderter Benutzername";
+			return Task.CompletedTask;
+        }
+
         public DateTime Zeitangabe
 		{
 			get { return _zeit; }
@@ -76,5 +88,7 @@ namespace WpfMd.ViewModel
 			ObservableCollection<string> result = new ObservableCollection<string>(certs);
 			return result;
         }
+
+        public IAsyncCommand ExampleAsyncCommand { get; }
     }
 }
