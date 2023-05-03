@@ -19,7 +19,7 @@
             <TextBlock Text="{Binding Zeitangabe}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
             <TextBlock Text="{Binding KundenName}" />
             <TextBlock Text="{Binding Username}" />
-            <Button Style="{DynamicResource MaterialDesignFlatLightButton}" Command="{Binding ExampleAsyncCommand}" />
+            <Button Style="{DynamicResource MaterialDesignRaisedAccentButton}" Command="{Binding ExampleAsyncCommand}" Content="Click me" Width="150" HorizontalAlignment="Left" />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"></RowDefinition>
