@@ -18,6 +18,22 @@
         <StackPanel>
             <TextBlock Text="{Binding Zeitangabe}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
             <TextBlock Text="{Binding KundenName}" />
+            <TextBlock Text="{Binding Username}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListBox Grid.Row="0" ItemsSource="{Binding CertList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            </Grid>
         </StackPanel>
         
     </Grid>

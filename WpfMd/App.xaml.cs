@@ -6,6 +6,7 @@ using Serilog;
 using System.Windows;
 using WpfMd.Options;
 using WpfMd.ViewModel;
+using WpfMd.Repositories;
 
 namespace WpfMd
 {
@@ -33,6 +34,7 @@ namespace WpfMd
                     
                 })
                 .UseSerilog()
+                
                 .Build();
         }
         protected override async void OnExit(ExitEventArgs e)
@@ -58,6 +60,8 @@ namespace WpfMd
             services.AddSingleton<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();
             services.Configure<TestOption>(options => configuration.GetSection(TestOption.SectionName).Bind(options));
+            services.Configure<SecretsOptions>(options => configuration.GetSection("Secrets").Bind(options));
+            services.AddTransient<ICertificateRepository, CertificateRepository>();
         }
     }
 }
